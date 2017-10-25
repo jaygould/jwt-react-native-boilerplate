@@ -32,8 +32,6 @@ Redux and [Redux Form](http://redux-form.com/7.0.3/) have been used for global s
 
 ### Login/Authentication
 
-A large part of the app is the authentication part. There's an Instagram API connection, but this login/auth is **nothing** to do with this.
-
 The auth is a custom made JWT system which used a Node back end (in the /server directory). The JWT is generated using jsonwebtoken and express-jwt, and sent back to the client. On each request to the server, the JWT is checked to ensure it's valid, and if it is the request goes through. If it's not valid (i.e. it's expired), the redux middleware will request a new token from the server using a refresh token.
 
 API endpoints in the Node back end protect routes from being accessed without a valid JWT.
@@ -53,10 +51,6 @@ Since with this approach you implement sessions plus JWT, it's more complicated 
 ### Errors
 
 The app is using global errors with Redux integration. The ErrorBar component is to be inserted into each page level component and it is positioned absolute on top of screen. All errors must subscribe to the global redux state to use.
-
-### Instagram
-
-Connection to instagram is working on this example, but not finished. The finished version was spun off to make the [Guneet's Lunch](https://github.com/jaygould/guneetslunch) project.
 
 **Native Setup Stuff**
 
