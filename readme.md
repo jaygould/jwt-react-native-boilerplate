@@ -38,16 +38,6 @@ API endpoints in the Node back end protect routes from being accessed without a 
 
 The refresh token and auth token are stored on the user device. The refresh token is used in this project as it can be deleted from the server side, revoking user access. JWT is normally completely stateless, but this is a half way between stateless and session based.
 
-See below for comments from Hacker News:
-
-> For this, you can use refresh tokens and set the JWT expiration to a low interval - say 10 minutes. After every 10 minutes, the JWT expires,authentication fails, and the client uses the refresh token to get a new JWT. To revoke a client, revoke their refresh token. This way, though they won't be logged out immediately, they would be logged out in a max of 10 minutes when they need to refresh again, and find out that their refresh token is no longer valid. The point is that instead of every request touching your DB or cache, only one request does in every 10 minutes.
-
-> If the JWT is as long as the refresh token, then what's the point of having a refresh token? You would then probably need to get new refresh tokens then to make the session last longer.
-The idea is to make the refresh token last for say a few days, and the JWT for say 10 minutes. Now, every 10 minutes the client needs to use the refresh token to get a new JWT. The maximum time a client can have access to the service without a valid refresh token is 10 minutes. All the requests made in this window of 10 minutes would be deemed authenticated by verifying the JWT, and without having to go through the database or cache.
-Now, say a user of a web app clicks "log me out from all my devices". The user's access needs to be revoked from everywhere they are logged in. If you invalidate all their refresh tokens, then in a max of 10 minutes they would be logged out from everywhere, as their refresh tokens would no longer work and the JWT duration is only 10 minutes.
-This approach is essentially a mid-way or a tradeoff between using traditional sessions and JWT. "Pure" JWT is stateless and hence cannot support individual session revocation. The only way to invalidate sessions in "pure" JWT would be to invalidate the key or certificate used to sign the JWT, but that would invalidate everyone else's sessions as well and hence is not very practical.
-Since with this approach you implement sessions plus JWT, it's more complicated than just using sessions. JWT should be used for such applications when the latency or load benefit is significant enough to justify the added complexity. For applications that do not need session revocation, however, JWTs are a convenient way to implement sessions without needing a DB or cache layer.
-
 ### Errors
 
 The app is using global errors with Redux integration. The ErrorBar component is to be inserted into each page level component and it is positioned absolute on top of screen. All errors must subscribe to the global redux state to use.

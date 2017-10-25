@@ -30,13 +30,21 @@ class LoggedIn extends Component {
 					textStyle={styles.submitButtonText}
 					title={'Check restricted access'}
 				/>
+				{this.props.loggedIn ? (
+					<Text style={styles.loggedInDesc}>
+						You are logged in with token: {this.props.authToken}
+					</Text>
+				) : null}
 			</View>
 		);
 	}
 }
 
 function mapStateToProps(store) {
-	return {};
+	return {
+		loggedIn: store.auth.loggedIn,
+		authToken: store.auth.authToken
+	};
 }
 function mapDispatchToProps(dispatch) {
 	return {
