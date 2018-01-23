@@ -8,7 +8,7 @@ import { iconsMap, iconsLoaded } from './modules/utils/appIcons';
 import configureStore from './store/configureStore';
 import { checkAuthStatus } from './modules/auth/auth.service';
 
-const store = configureStore();
+export const store = configureStore();
 registerScreens(store, Provider);
 
 const navigatorStyle = {

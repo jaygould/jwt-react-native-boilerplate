@@ -1,8 +1,16 @@
-const errorHandler = (res, err) => {
-	return res.status(400).send({
-		success: false,
-		message: err
-	});
+const errorHandler = (res, errorMessage, errorCode) => {
+	if (errorCode === 'invalidToken') {
+		return res.status(403).send({
+			success: false,
+			message: errorMessage,
+			code: errorCode
+		});
+	} else {
+		return res.status(400).send({
+			success: false,
+			message: errorMessage
+		});
+	}
 };
 
 module.exports = {

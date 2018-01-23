@@ -1,4 +1,5 @@
 import config from '../../config';
+import { handleErrors } from './errors.api';
 
 class AuthApi {
 	static login(email, password) {
@@ -7,9 +8,8 @@ class AuthApi {
 			body: JSON.stringify({ email: email, password: password }),
 			headers: config.configHeaders
 		})
-			.then(response => {
-				return response.json();
-			})
+			.then(response => response.json())
+			.then(handleErrors)
 			.catch(error => {
 				throw error;
 			});
@@ -20,24 +20,22 @@ class AuthApi {
 			body: JSON.stringify({ refreshToken: refreshToken }),
 			headers: config.configHeaders
 		})
-			.then(response => {
-				return response.json();
-			})
+			.then(response => response.json())
+			.then(handleErrors)
 			.catch(error => {
 				throw error;
 			});
 	}
 	static checkAuthTest(token) {
-		return fetch(`${config.url}/api/auth/protected/getAll`, {
+		return fetch(`${config.url}/api/auth/getAll`, {
 			method: 'POST',
 			headers: {
 				...config.configHeaders,
 				Authorization: 'Bearer ' + token
 			}
 		})
-			.then(response => {
-				return response.json();
-			})
+			.then(response => response.json())
+			.then(handleErrors)
 			.catch(error => {
 				throw error;
 			});

@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Users = require('../models/Users');
 const _ = require('lodash');
-const ejwt = require('express-jwt');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const auth = require('./auth');
 const config = require('../config/auth.js');
 const errors = require('./error');
@@ -24,8 +25,9 @@ router.post(
 						'A user with that username already exists.'
 					);
 				}
-				//TODO: encrypt password
-				let newUser = _.pick(req.body, 'first', 'last', 'email', 'password');
+				let passwordHash = bcrypt.hashSync(req.body.password.trim(), 12);
+				let newUser = _.pick(req.body, 'first', 'last', 'email');
+				newUser.password = passwordHash;
 				return Users.create(newUser);
 			})
 			.then(newUser => {
@@ -61,14 +63,21 @@ router.post(
 				if (user.length == 0) {
 					return errors.errorHandler(res, 'There has been an error.');
 				}
-				if (!(user.password === req.body.password)) {
-					return errors.errorHandler(
-						res,
-						'The username or password don\'t match.'
-					);
-				}
-				req.user = user;
-				next();
+				bcrypt.compare(req.body.password, user.password, (err, success) => {
+					if (err) {
+						return errors.errorHandler(
+							res,
+							'The has been an unexpected error, please try again later'
+						);
+					}
+					if (!success) {
+						return errors.errorHandler(res, 'Your password is incorrect.');
+					} else {
+						req.user = user;
+						req.activity = 'login';
+						next();
+					}
+				});
 			})
 			.catch(err => {
 				return errors.errorHandler(res, err);
@@ -97,18 +106,28 @@ router.post(
 	}
 );
 
-//all URLs starting with /protected will be safe when sending "Authorization: Bearer [token]" header
-router.use('/protected', ejwt({ secret: config.secret }));
-//catch any errors if the JWT is not valid
-router.use((err, req, res) => {
-	if (err.name === 'UnauthorizedError') {
-		res.status(401).send({
-			success: false,
-			error: 'UnauthorizedError'
-		});
+router.use((req, res, next) => {
+	var token = req.headers['authorization'];
+	if (!token) {
+		return next();
 	}
+	token = token.replace('Bearer ', '');
+	jwt.verify(token, config.secret, (err, user) => {
+		if (err) {
+			//attempt to refresh token here... if successful, next(). Maybe won't work as we'd need the refresh token on every request?
+			return errors.errorHandler(
+				res,
+				'Your access token is invalid.',
+				'invalidToken'
+			);
+		} else {
+			req.user = user;
+			next();
+		}
+	});
 });
-router.post('/protected/getAll', (req, res) => {
+
+router.post('/getAll', (req, res) => {
 	Users.find()
 		.then(users => {
 			res.status(201).send({

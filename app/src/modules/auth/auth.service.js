@@ -15,7 +15,7 @@ const _saveItem = async (item, selectedValue) => {
 	}
 };
 
-export const refreshToken = refreshToken => {
+export const refreshToken = (refreshToken, prevFailedRequest) => {
 	return dispatch => {
 		return AuthApi.refreshToken(refreshToken)
 			.then(response => {
@@ -26,7 +26,8 @@ export const refreshToken = refreshToken => {
 					dispatch(AuthReducer.saveAppToken(response.authToken));
 					_saveItem('authToken', response.authToken)
 						.then(resp => {
-							console.log('All sorted');
+							prevFailedRequest();
+							console.log('Refresh finished');
 						})
 						.catch(error => {
 							dispatch(asyncError(error));
