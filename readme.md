@@ -15,6 +15,7 @@ The React Native instance and Node instance will then need to be ran:
 
 Then create a MongoDB database and add the URL to a `.env` file in the `/server` directory.
 
+The repo does not yet have a register section to get people in to the database, so you'll need to manually add people and use the credentials to log in. I'll try and get round to this soon, but in the meantime **I'm happy to receive pull requests** for a hand :)
 
 ## Navigation using Wix React Native Navigation
 
