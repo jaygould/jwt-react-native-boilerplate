@@ -1,4 +1,4 @@
-# React Native starter pack with Node server and JWT authentication
+# React Native starter pack with JWT authentication
 
 This is a boilerplate/starter pack for a React Native app, and Node.js back end. The main focus for this repo is the usage of JWT's for authentication, including using a custom system for handling access tokens and refresh tokens.
 
