@@ -2,9 +2,9 @@ import { AsyncStorage } from 'react-native';
 import jwtDecode from 'jwt-decode';
 import moment from 'moment';
 import AuthApi from './auth.api';
-import { connectionErrorTimeout, asyncError } from './../errors/error.reducer';
+import { connectionErrorTimeout, asyncError } from '../errors/error.reducer';
 import * as AuthReducer from './auth.reducer';
-import App from './../../app';
+import App from '../../app';
 import config from '../../config';
 
 const _saveItem = async (item, selectedValue) => {

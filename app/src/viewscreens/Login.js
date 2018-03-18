@@ -10,8 +10,8 @@ import {
 	FormValidationMessage
 } from 'react-native-elements';
 
-import ErrorBar from './../errors/ErrorBar';
-import { login, checkAuthTest } from '../auth/auth.service';
+import ErrorBar from '../viewcomponents/ErrorBar';
+import { login, checkAuthTest } from '../modules/auth/auth.service';
 
 class Login extends Component {
 	constructor(props) {
@@ -36,7 +36,6 @@ class Login extends Component {
 				</FormValidationMessage>
 				<Button
 					onPress={handleSubmit(submitForm)}
-					// icon={{ name: 'vpn-key', size: 32, color: '#444' }}
 					buttonStyle={styles.submitButton}
 					textStyle={styles.submitButtonText}
 					title={'Log in'}
@@ -49,7 +48,6 @@ class Login extends Component {
 				) : null}
 				<Button
 					onPress={this.props.checkAuthTest}
-					// icon={{ name: 'vpn-key', size: 32, color: '#444' }}
 					buttonStyle={styles.submitButton}
 					textStyle={styles.submitButtonText}
 					title={'Check restricted access'}

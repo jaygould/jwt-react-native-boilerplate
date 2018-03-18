@@ -26,7 +26,7 @@ class Home extends Component {
 	render() {
 		return (
 			<View style={styles.homeContainer}>
-				<Image source={require('../../img/title.png')} style={styles.logo} />
+				<Image source={require('../assets/title.png')} style={styles.logo} />
 				<Button
 					onPress={this.goToLoginPage}
 					//icon={{ name: 'account-box', size: 32, color: '#fff' }}

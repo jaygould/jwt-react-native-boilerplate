@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Platform } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
-import { registerScreens } from './screens';
+import { registerScreens } from './viewscreens';
 import { iconsMap, iconsLoaded } from './modules/utils/appIcons';
 
 import configureStore from './store/configureStore';
@@ -57,7 +57,7 @@ class App extends Component {
 		});
 	}
 
-	static startAppLoggedIn = () => {
+	static startAppLoggedIn() {
 		Navigation.startTabBasedApp({
 			tabs: [
 				{
@@ -75,6 +75,6 @@ class App extends Component {
 			},
 			animationType: Platform.OS === 'ios' ? 'slide-down' : 'fade'
 		});
-	};
+	}
 }
 export default App;

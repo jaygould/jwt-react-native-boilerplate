@@ -3,9 +3,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
 
-import { logout, checkAuthTest } from '../auth/auth.service';
+import { logout, checkAuthTest } from '../modules/auth/auth.service';
 
-import ErrorBar from './../errors/ErrorBar';
+import ErrorBar from '../viewcomponents/ErrorBar';
 
 class LoggedIn extends Component {
 	constructor(props) {
@@ -18,14 +18,12 @@ class LoggedIn extends Component {
 				<Text>Welcome</Text>
 				<Button
 					onPress={this.props.logoutButton}
-					// icon={{ name: 'vpn-key', size: 32, color: '#444' }}
 					buttonStyle={styles.submitButton}
 					textStyle={styles.submitButtonText}
 					title={'Log out'}
 				/>
 				<Button
 					onPress={this.props.checkAuthTest}
-					// icon={{ name: 'vpn-key', size: 32, color: '#444' }}
 					buttonStyle={styles.submitButton}
 					textStyle={styles.submitButtonText}
 					title={'Check restricted access'}

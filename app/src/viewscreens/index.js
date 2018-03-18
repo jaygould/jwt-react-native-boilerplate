@@ -1,9 +1,9 @@
 import { Navigation } from 'react-native-navigation';
 
-import Home from './modules/home/Home';
-import Login from './modules/login/Login';
+import Home from './Home';
+import Login from './Login';
 
-import LoggedIn from './modules/loggedIn/LoggedIn';
+import LoggedIn from './LoggedIn';
 
 export function registerScreens(store, Provider) {
 	Navigation.registerComponent('testapp.Home', () => Home, store, Provider);
