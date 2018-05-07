@@ -11,25 +11,28 @@ import {
 } from 'react-native-elements';
 
 import ErrorBar from '../viewcomponents/ErrorBar';
-import { login, checkAuthTest } from '../modules/auth/auth.service';
+import { register } from '../modules/auth/auth.service';
 
-class Login extends Component {
+class Register extends Component {
 	constructor(props) {
 		super(props);
-		this.goToRegister = this.goToRegister.bind(this);
 	}
 
 	render() {
 		const { handleSubmit } = this.props;
 		const submitForm = e => {
-			this.props.login(e.email, e.password);
+			this.props.register(e.first, e.last, e.email, e.password);
 		};
 
 		return (
 			<View style={styles.container}>
 				<ErrorBar />
+				<FormLabel>First name</FormLabel>
+				<Field name="first" component={renderInput} />
+				<FormLabel>Last name</FormLabel>
+				<Field name="last" component={renderInput} />
 				<FormLabel>Email</FormLabel>
-				<Field name="email" component={renderEmail} />
+				<Field name="email" component={renderInput} />
 				<FormLabel>Password</FormLabel>
 				<Field name="password" component={renderPassword} />
 				<FormValidationMessage containerStyle={styles.errorMessage}>
@@ -39,38 +42,18 @@ class Login extends Component {
 					onPress={handleSubmit(submitForm)}
 					buttonStyle={styles.submitButton}
 					textStyle={styles.submitButtonText}
-					title={'Log in'}
+					title={'Register'}
 				/>
-
-				{this.props.loggedIn ? (
-					<Text style={styles.loggedInDesc}>
-						You are logged in with token: {this.props.authToken}
-					</Text>
+				{this.props.registered ? (
+					<Text style={styles.loggedInDesc}>Register was successfull</Text>
 				) : null}
-				<Button
-					onPress={this.props.checkAuthTest}
-					buttonStyle={styles.submitButton}
-					textStyle={styles.submitButtonText}
-					title={'Check restricted access'}
-				/>
-				<Button
-					onPress={this.goToRegister}
-					buttonStyle={styles.submitButton}
-					textStyle={styles.submitButtonText}
-					title={'Create account'}
-				/>
 			</View>
 		);
-	}
-	goToRegister() {
-		this.props.navigator.push({
-			screen: 'testapp.Register'
-		});
 	}
 }
 
 //must be rendered outside of the render method as this will cause it to re-render each time the props change
-const renderEmail = ({ input: { onChange, ...restInput } }) => {
+const renderInput = ({ input: { onChange, ...restInput } }) => {
 	return (
 		<FormInput
 			containerStyle={styles.input}
@@ -92,25 +75,22 @@ const renderPassword = ({ input: { onChange, ...restInput } }) => {
 
 function mapStateToProps(store, ownProps) {
 	return {
-		errorMessage: store.auth.loginError,
-		loggedIn: store.auth.loggedIn,
+		errorMessage: store.auth.regError,
+		registered: store.auth.registered,
 		authToken: store.auth.authToken
 	};
 }
 function mapDispatchToProps(dispatch) {
 	return {
-		login: (email, password) => {
-			dispatch(login(email, password));
-		},
-		checkAuthTest: () => {
-			dispatch(checkAuthTest());
+		register: (first, last, email, password) => {
+			dispatch(register(first, last, email, password));
 		}
 	};
 }
-let LoginConnect = connect(mapStateToProps, mapDispatchToProps)(Login);
+let RegisterConnect = connect(mapStateToProps, mapDispatchToProps)(Register);
 export default reduxForm({
-	form: 'loginForm'
-})(LoginConnect);
+	form: 'registerForm'
+})(RegisterConnect);
 
 const styles = StyleSheet.create({
 	container: {

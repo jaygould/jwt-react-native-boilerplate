@@ -1,7 +1,7 @@
 // Actions
-export const setLoginPending = () => {
+export const setAuthPending = () => {
 	return {
-		type: 'SET_LOGIN_PENDING'
+		type: 'SET_AUTH_PENDING'
 	};
 };
 export const setLoginSuccess = (authToken, refreshToken) => {
@@ -17,6 +17,17 @@ export const setLoginError = loginError => {
 		loginError
 	};
 };
+export const setRegisterSuccess = () => {
+	return {
+		type: 'SET_REGISTER_SUCCESS'
+	};
+};
+export const setRegisterError = regError => {
+	return {
+		type: 'SET_REGISTER_ERROR',
+		regError
+	};
+};
 export const setLogout = () => {
 	return {
 		type: 'SET_LOGOUT'
@@ -30,24 +41,28 @@ export const saveAppToken = authToken => {
 };
 //Reducer
 let initialState = {
-	loginPending: false,
+	authPending: false,
 	loggedIn: false,
+	registered: false,
 	loginError: false,
+	regError: false,
 	authToken: null,
-	refreshToken: null
+	refreshToken: null,
+	tokenIsValid: null,
+	pendingRefreshingToken: null
 };
 
 export default function(state = initialState, action) {
 	switch (action.type) {
-	case 'SET_LOGIN_PENDING':
+	case 'SET_AUTH_PENDING':
 		return {
 			...state,
-			loginPending: true
+			authPending: true
 		};
 	case 'SET_LOGIN_SUCCESS':
 		return {
 			...state,
-			loginPending: false,
+			authPending: false,
 			loggedIn: true,
 			loginError: false,
 			authToken: action.authToken,
@@ -56,9 +71,22 @@ export default function(state = initialState, action) {
 	case 'SET_LOGIN_ERROR':
 		return {
 			...state,
-			loginPending: false,
+			authPending: false,
 			loggedIn: false,
 			loginError: action.loginError
+		};
+	case 'SET_REGISTER_SUCCESS':
+		return {
+			...state,
+			authPending: false,
+			regError: false,
+			registered: true
+		};
+	case 'SET_REGISTER_ERROR':
+		return {
+			...state,
+			authPending: false,
+			regError: action.regError
 		};
 	case 'SET_LOGOUT':
 		return {
@@ -67,21 +95,29 @@ export default function(state = initialState, action) {
 			refreshToken: false,
 			loggedIn: false
 		};
+	case 'INVALID_TOKEN':
+		return {
+			...state,
+			tokenIsValid: false
+		};
 	case 'REFRESHING_TOKEN':
 		return {
 			...state,
-			tokenRefreshing: true
+			pendingRefreshingToken: true,
+			tokenIsValid: false
 		};
-	case 'DONE_REFRESHING_TOKEN':
+	case 'TOKEN_REFRESHED':
 		return {
 			...state,
-			tokenRefreshing: false
+			pendingRefreshingToken: null,
+			tokenIsValid: true
 		};
 	case 'SAVE_APP_TOKEN':
 		return {
 			...state,
 			authToken: action.authToken
 		};
+
 	default:
 		return state;
 	}

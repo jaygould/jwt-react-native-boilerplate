@@ -1,5 +1,5 @@
 import config from '../../config';
-import { handleErrors } from './errors.api';
+import { handleTokenErrors } from '../errors/error.service';
 
 class AuthApi {
 	static login(email, password) {
@@ -9,7 +9,19 @@ class AuthApi {
 			headers: config.configHeaders
 		})
 			.then(response => response.json())
-			.then(handleErrors)
+			.then(handleTokenErrors)
+			.catch(error => {
+				throw error;
+			});
+	}
+	static register(first, last, email, password) {
+		return fetch(`${config.url}/api/auth/signup`, {
+			method: 'POST',
+			body: JSON.stringify({ first, last, email, password }),
+			headers: config.configHeaders
+		})
+			.then(response => response.json())
+			.then(handleTokenErrors)
 			.catch(error => {
 				throw error;
 			});
@@ -21,7 +33,7 @@ class AuthApi {
 			headers: config.configHeaders
 		})
 			.then(response => response.json())
-			.then(handleErrors)
+			.then(handleTokenErrors)
 			.catch(error => {
 				throw error;
 			});
@@ -35,7 +47,7 @@ class AuthApi {
 			}
 		})
 			.then(response => response.json())
-			.then(handleErrors)
+			.then(handleTokenErrors)
 			.catch(error => {
 				throw error;
 			});
