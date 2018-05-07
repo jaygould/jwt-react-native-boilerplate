@@ -1,38 +1,38 @@
 {
-	"name": "jwt-react-native-boilerplate",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"start": "node node_modules/react-native/local-cli/cli.js start",
-		"test": "jest"
-	},
-	"dependencies": {
-		"jwt-decode": "2.2.0",
-		"moment": "2.18.1",
-		"react": "16.0.0-alpha.12",
-		"react-native": "0.45.1",
-		"react-native-config": "0.9.0",
-		"react-native-elements": "0.13.0",
-		"react-native-navigation": "1.1.115",
-		"react-native-safari-view": "2.0.0",
-		"react-native-vector-icons": "4.2.0",
-		"react-redux": "5.0.5",
-		"redux": "3.7.1",
-		"redux-form": "6.8.0",
-		"redux-logger": "3.0.6",
-		"redux-thunk": "2.2.0",
-		"url-parse": "1.1.9"
-	},
-	"devDependencies": {
-		"babel-jest": "20.0.3",
-		"babel-preset-react-native": "2.0.0",
-		"eslint": "4.3.0",
-		"eslint-plugin-react": "7.1.0",
-		"jest": "20.0.4",
-		"react-test-renderer": "16.0.0-alpha.12",
-		"eslint-plugin-react-native": "3.0.1"
-	},
-	"jest": {
-		"preset": "react-native"
-	}
+  "name": "jwt-react-native-boilerplate",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "jwt-decode": "2.2.0",
+    "moment": "2.19.3",
+    "react": "16.0.0-alpha.12",
+    "react-native": "0.45.1",
+    "react-native-config": "0.9.0",
+    "react-native-elements": "0.13.0",
+    "react-native-navigation": "1.1.115",
+    "react-native-safari-view": "2.0.0",
+    "react-native-vector-icons": "4.2.0",
+    "react-redux": "5.0.5",
+    "redux": "3.7.1",
+    "redux-form": "6.8.0",
+    "redux-logger": "3.0.6",
+    "redux-thunk": "2.2.0",
+    "url-parse": "1.1.9"
+  },
+  "devDependencies": {
+    "babel-jest": "20.0.3",
+    "babel-preset-react-native": "2.0.0",
+    "eslint": "4.3.0",
+    "eslint-plugin-react": "7.1.0",
+    "jest": "20.0.4",
+    "react-test-renderer": "16.0.0-alpha.12",
+    "eslint-plugin-react-native": "3.0.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
 }
