@@ -8,6 +8,8 @@ import { iconsMap, iconsLoaded } from './modules/utils/appIcons';
 import configureStore from './store/configureStore';
 import { checkAuthStatus } from './modules/auth/auth.service';
 
+import { defaultNavigator, defaultTabs } from './viewscreens/style';
+
 export const store = configureStore();
 registerScreens(store, Provider);
 
@@ -19,8 +21,6 @@ const navigatorStyle = {
 	statusBarTextColorScheme: 'light',
 	drawUnderTabBar: false
 };
-
-console.ignoredYellowBox = ['Remote debugger'];
 
 class App extends Component {
 	constructor(props) {
@@ -43,12 +43,8 @@ class App extends Component {
 				screen: 'testapp.Home',
 				title: 'Welcome',
 				navigatorStyle: {
-					drawUnderNavBar: false,
-					navBarTranslucent: true,
-					navBarBackgroundColor: '#2073d4',
-					navBarTextColor: '#ffffff',
-					navBarButtonColor: '#fff',
-					navBarHidden: true
+					...defaultNavigator,
+					statusBarTextColorScheme: 'light'
 				},
 				navigatorButtons: {}
 			},
@@ -61,18 +57,19 @@ class App extends Component {
 		Navigation.startTabBasedApp({
 			tabs: [
 				{
-					label: 'LoggedIn',
+					label: 'Dashboard',
 					screen: 'testapp.LoggedIn',
-					title: 'LoggedIn',
-					//icon: iconsMap['social-instagram-outline'],
-					navigatorStyle
+					title: 'Dashboard',
+					navigatorStyle: defaultNavigator
+				},
+				{
+					label: 'About',
+					screen: 'testapp.About',
+					title: 'About',
+					navigatorStyle: defaultNavigator
 				}
 			],
-			tabsStyle: {
-				tabBarButtonColor: 'white',
-				tabBarSelectedButtonColor: 'rgb(171, 171, 171)',
-				tabBarBackgroundColor: 'black'
-			},
+			tabsStyle: defaultTabs,
 			animationType: Platform.OS === 'ios' ? 'slide-down' : 'fade'
 		});
 	}

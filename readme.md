@@ -42,3 +42,11 @@ The refresh token and auth token are stored on the user device. The refresh toke
 The app is using global errors with Redux integration. The ErrorBar component is to be inserted into each page level component and it is positioned absolute on top of screen. All errors must subscribe to the global redux state to use.
 
 Error handling on the server is handled in an isolate file to help with maintainability, and may be moved elsewhere in a future version.
+
+## Steps to take when unknown errors occur
+
+* Close packager terminal and re-build app using `react-native run-ios`.
+* Delete `/build` directory inside the `/ios` or `/android` directories, and re-run `react-native run-ios`.
+* Delete node_modules and re-run `npm install`.
+* Uninstall app from device or emulator and re-run.
+* Run `npm start -- --reset-cache` and re-run.

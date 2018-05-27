@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { Text, View, StyleSheet, Image, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
+import { Button } from 'react-native-elements';
 
-import { Button, Icons } from 'react-native-elements';
+import { globalStyle, defaultNavigator } from './style';
 
 class Home extends Component {
 	constructor(props) {
@@ -16,33 +18,34 @@ class Home extends Component {
 			title: 'Login',
 			passProps: {},
 			animated: true,
-			animationType: 'fade',
 			backButtonHidden: false,
-			navigatorStyle: {},
+			navigatorStyle: defaultNavigator,
 			navigatorButtons: {}
 		});
 	}
 
 	render() {
 		return (
-			<View style={styles.homeContainer}>
-				<Image source={require('../assets/title.png')} style={styles.logo} />
+			<LinearGradient
+				colors={['#3A1C71', '#D76D77', '#FFAF7B']}
+				style={styles.homeContainer}
+			>
+				<StatusBar barStyle="light-content" />
+				<Text style={styles.welcomeText}>
+					JWT authentication boilerplate with Redux
+				</Text>
 				<Button
 					onPress={this.goToLoginPage}
-					//icon={{ name: 'account-box', size: 32, color: '#fff' }}
-					buttonStyle={styles.btn}
-					textStyle={styles.btnText}
-					title={'Enter'}
+					buttonStyle={[globalStyle.btn, styles.welcomeBtn]}
+					titleStyle={globalStyle.btnText}
+					title="Enter"
 				/>
-			</View>
+			</LinearGradient>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
-	logo: {
-		marginBottom: 100
-	},
 	homeContainer: {
 		flex: 1,
 		flexDirection: 'column',
@@ -50,16 +53,16 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		paddingTop: 30
 	},
-	btn: {
-		backgroundColor: '#2073d4',
-		borderRadius: 30,
-		marginTop: 20,
-		padding: 20,
-		width: '100%'
+	welcomeText: {
+		fontFamily: 'Norwester',
+		backgroundColor: 'rgba(0,0,0,0)',
+		color: '#fff',
+		fontSize: 30,
+		textAlign: 'center'
 	},
-	btnText: {
-		textAlign: 'center',
-		fontSize: 14
+	welcomeBtn: {
+		marginTop: 30,
+		width: '100%'
 	}
 });
 function mapStateToProps(state, ownProps) {

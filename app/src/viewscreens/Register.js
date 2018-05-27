@@ -2,16 +2,13 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
-import {
-	Button,
-	Icons,
-	FormLabel,
-	FormInput,
-	FormValidationMessage
-} from 'react-native-elements';
+import { Input, Button } from 'react-native-elements';
+import LinearGradient from 'react-native-linear-gradient';
 
 import ErrorBar from '../viewcomponents/ErrorBar';
 import { register } from '../modules/auth/auth.service';
+
+import { globalStyle, defaultNavigator } from './style';
 
 class Register extends Component {
 	constructor(props) {
@@ -25,48 +22,58 @@ class Register extends Component {
 		};
 
 		return (
-			<View style={styles.container}>
+			<LinearGradient
+				colors={['#3A1C71', '#D76D77', '#FFAF7B']}
+				style={styles.container}
+			>
 				<ErrorBar />
-				<FormLabel>First name</FormLabel>
-				<Field name="first" component={renderInput} />
-				<FormLabel>Last name</FormLabel>
-				<Field name="last" component={renderInput} />
-				<FormLabel>Email</FormLabel>
-				<Field name="email" component={renderInput} />
-				<FormLabel>Password</FormLabel>
-				<Field name="password" component={renderPassword} />
-				<FormValidationMessage containerStyle={styles.errorMessage}>
-					{this.props.errorMessage}
-				</FormValidationMessage>
+
+				<Field name="first" placeholder="First name" component={renderInput} />
+				<Field name="last" placeholder="Last name" component={renderInput} />
+				<Field name="email" placeholder="Email" component={renderInput} />
+				<Field
+					name="password"
+					placeholder="Password"
+					component={renderPassword}
+				/>
+				<View style={styles.errorMessage}>
+					<Text>{this.props.errorMessage}</Text>
+				</View>
+
 				<Button
 					onPress={handleSubmit(submitForm)}
-					buttonStyle={styles.submitButton}
-					textStyle={styles.submitButtonText}
+					buttonStyle={[globalStyle.btn]}
+					titleStyle={globalStyle.btnText}
 					title={'Register'}
 				/>
 				{this.props.registered ? (
 					<Text style={styles.loggedInDesc}>Register was successfull</Text>
 				) : null}
-			</View>
+			</LinearGradient>
 		);
 	}
 }
 
 //must be rendered outside of the render method as this will cause it to re-render each time the props change
-const renderInput = ({ input: { onChange, ...restInput } }) => {
+const renderInput = ({ input: { onChange, ...restInput }, placeholder }) => {
+	console.log(placeholder);
 	return (
-		<FormInput
-			containerStyle={styles.input}
+		<Input
+			inputContainerStyle={styles.input}
+			inputStyle={styles.placeholder}
 			onChangeText={onChange}
+			placeholder={placeholder}
 			{...restInput}
 		/>
 	);
 };
-const renderPassword = ({ input: { onChange, ...restInput } }) => {
+const renderPassword = ({ input: { onChange, ...restInput }, placeholder }) => {
 	return (
-		<FormInput
-			containerStyle={styles.input}
+		<Input
+			inputContainerStyle={styles.input}
+			inputStyle={styles.placeholder}
 			onChangeText={onChange}
+			placeholder={placeholder}
 			{...restInput}
 			secureTextEntry={true}
 		/>
@@ -100,8 +107,15 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	input: {
-		width: '75%',
-		height: 40
+		backgroundColor: '#ffffff',
+		borderBottomWidth: 0,
+		marginBottom: 10,
+		borderRadius: 2,
+		paddingVertical: 5,
+		width: '100%'
+	},
+	placeholder: {
+		fontSize: 12
 	},
 	submitButton: {
 		backgroundColor: '#ffffff',

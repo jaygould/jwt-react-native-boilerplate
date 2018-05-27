@@ -12,10 +12,11 @@
     "react": "16.0.0-alpha.12",
     "react-native": "0.45.1",
     "react-native-config": "0.9.0",
-    "react-native-elements": "0.13.0",
-    "react-native-navigation": "1.1.115",
+    "react-native-elements": "1.0.0-beta5",
+    "react-native-linear-gradient": "2.4.0",
+    "react-native-navigation": "1.1.458",
     "react-native-safari-view": "2.0.0",
-    "react-native-vector-icons": "4.2.0",
+    "react-native-vector-icons": "4.6.0",
     "react-redux": "5.0.5",
     "redux": "3.7.1",
     "redux-form": "6.8.0",
@@ -34,5 +35,10 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "rnpm": {
+    "assets": [
+      "./src/assets/fonts/"
+    ]
   }
 }

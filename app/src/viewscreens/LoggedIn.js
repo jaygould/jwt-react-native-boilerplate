@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
+import LinearGradient from 'react-native-linear-gradient';
 
 import { logout, checkAuthTest } from '../modules/auth/auth.service';
 
 import ErrorBar from '../viewcomponents/ErrorBar';
+
+import { globalStyle } from './style';
 
 class LoggedIn extends Component {
 	constructor(props) {
@@ -13,27 +16,33 @@ class LoggedIn extends Component {
 	}
 	render() {
 		return (
-			<View style={styles.container}>
+			<LinearGradient
+				colors={['#3A1C71', '#D76D77', '#FFAF7B']}
+				style={styles.container}
+			>
+				<StatusBar barStyle="light-content" />
+
 				<ErrorBar />
-				<Text>Welcome</Text>
-				<Button
-					onPress={this.props.logoutButton}
-					buttonStyle={styles.submitButton}
-					textStyle={styles.submitButtonText}
-					title={'Log out'}
-				/>
-				<Button
-					onPress={this.props.checkAuthTest}
-					buttonStyle={styles.submitButton}
-					textStyle={styles.submitButtonText}
-					title={'Check restricted access'}
-				/>
 				{this.props.loggedIn ? (
 					<Text style={styles.loggedInDesc}>
 						You are logged in with token: {this.props.authToken}
 					</Text>
 				) : null}
-			</View>
+				<View>
+					<Button
+						onPress={this.props.logoutButton}
+						buttonStyle={[globalStyle.btn, styles.loggedInBtn]}
+						titleStyle={globalStyle.btnText}
+						title={'Log out'}
+					/>
+					<Button
+						onPress={this.props.checkAuthTest}
+						buttonStyle={[globalStyle.btn, styles.loggedInBtn]}
+						titleStyle={globalStyle.btnText}
+						title={'Check restricted access'}
+					/>
+				</View>
+			</LinearGradient>
 		);
 	}
 }
@@ -64,15 +73,15 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center'
 	},
-	submitButton: {
-		backgroundColor: '#ffffff',
-		borderRadius: 10,
-		marginTop: 20,
-		borderWidth: 1,
-		borderColor: '#666666'
+	loggedInDesc: {
+		margin: 10,
+		fontSize: 11,
+		padding: 20,
+		color: '#444',
+		marginTop: 30
 	},
-	submitButtonText: {
-		textAlign: 'center',
-		color: '#444'
+	loggedInBtn: {
+		width: '100%',
+		marginTop: 20
 	}
 });

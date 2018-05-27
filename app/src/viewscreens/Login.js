@@ -2,16 +2,13 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
-import {
-	Button,
-	Icons,
-	FormLabel,
-	FormInput,
-	FormValidationMessage
-} from 'react-native-elements';
+import LinearGradient from 'react-native-linear-gradient';
+import { Input, Button } from 'react-native-elements';
 
 import ErrorBar from '../viewcomponents/ErrorBar';
 import { login, checkAuthTest } from '../modules/auth/auth.service';
+
+import { globalStyle, defaultNavigator } from './style';
 
 class Login extends Component {
 	constructor(props) {
@@ -26,21 +23,32 @@ class Login extends Component {
 		};
 
 		return (
-			<View style={styles.container}>
+			<LinearGradient
+				colors={['#3A1C71', '#D76D77', '#FFAF7B']}
+				style={styles.container}
+			>
 				<ErrorBar />
-				<FormLabel>Email</FormLabel>
 				<Field name="email" component={renderEmail} />
-				<FormLabel>Password</FormLabel>
 				<Field name="password" component={renderPassword} />
-				<FormValidationMessage containerStyle={styles.errorMessage}>
-					{this.props.errorMessage}
-				</FormValidationMessage>
-				<Button
-					onPress={handleSubmit(submitForm)}
-					buttonStyle={styles.submitButton}
-					textStyle={styles.submitButtonText}
-					title={'Log in'}
-				/>
+
+				<View style={styles.errorMessage}>
+					<Text>{this.props.errorMessage}</Text>
+				</View>
+
+				<View style={styles.authBtnWrap}>
+					<Button
+						onPress={handleSubmit(submitForm)}
+						buttonStyle={[globalStyle.btn, styles.authBtn]}
+						titleStyle={globalStyle.btnText}
+						title="Log in"
+					/>
+					<Button
+						onPress={this.goToRegister}
+						buttonStyle={[globalStyle.btn, styles.authBtn]}
+						titleStyle={globalStyle.btnText}
+						title={'Create account'}
+					/>
+				</View>
 
 				{this.props.loggedIn ? (
 					<Text style={styles.loggedInDesc}>
@@ -49,31 +57,33 @@ class Login extends Component {
 				) : null}
 				<Button
 					onPress={this.props.checkAuthTest}
-					buttonStyle={styles.submitButton}
-					textStyle={styles.submitButtonText}
+					buttonStyle={[globalStyle.btn, styles.accessBtn]}
+					titleStyle={globalStyle.btnText}
 					title={'Check restricted access'}
 				/>
-				<Button
-					onPress={this.goToRegister}
-					buttonStyle={styles.submitButton}
-					textStyle={styles.submitButtonText}
-					title={'Create account'}
-				/>
-			</View>
+			</LinearGradient>
 		);
 	}
 	goToRegister() {
 		this.props.navigator.push({
-			screen: 'testapp.Register'
+			screen: 'testapp.Register',
+			title: 'Register',
+			passProps: {},
+			animated: true,
+			backButtonHidden: false,
+			navigatorStyle: defaultNavigator,
+			navigatorButtons: {}
 		});
 	}
 }
 
-//must be rendered outside of the render method as this will cause it to re-render each time the props change
+//must be rendered outside of the render method - from Redux Form docs
 const renderEmail = ({ input: { onChange, ...restInput } }) => {
 	return (
-		<FormInput
-			containerStyle={styles.input}
+		<Input
+			placeholder="Email"
+			inputContainerStyle={styles.input}
+			inputStyle={styles.placeholder}
 			onChangeText={onChange}
 			{...restInput}
 		/>
@@ -81,11 +91,14 @@ const renderEmail = ({ input: { onChange, ...restInput } }) => {
 };
 const renderPassword = ({ input: { onChange, ...restInput } }) => {
 	return (
-		<FormInput
-			containerStyle={styles.input}
+		<Input
+			placeholder="Password"
+			name="password"
+			inputContainerStyle={styles.input}
+			inputStyle={styles.placeholder}
 			onChangeText={onChange}
-			{...restInput}
 			secureTextEntry={true}
+			{...restInput}
 		/>
 	);
 };
@@ -117,27 +130,42 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: 'column',
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+		padding: 10
 	},
 	input: {
-		width: '75%',
-		height: 40
-	},
-	submitButton: {
 		backgroundColor: '#ffffff',
-		borderRadius: 10,
-		marginTop: 20,
-		borderWidth: 1,
-		borderColor: '#666666'
+		borderBottomWidth: 0,
+		marginBottom: 10,
+		borderRadius: 2,
+		paddingVertical: 5,
+		width: '100%'
 	},
-	submitButtonText: {
-		textAlign: 'center',
-		color: '#444'
+	placeholder: {
+		fontSize: 12
 	},
 	errorMessage: {
 		marginTop: 40
 	},
 	loggedInDesc: {
 		marginTop: 40
+	},
+	authBtnWrap: {
+		flexDirection: 'row',
+		justifyContent: 'space-around',
+		width: '100%',
+		paddingHorizontal: 15
+	},
+	authBtn: {
+		marginHorizontal: 0,
+		marginVertical: 18,
+		width: '80%',
+		alignSelf: 'center'
+	},
+	accessBtn: {
+		marginHorizontal: 0,
+		marginVertical: 30,
+		width: '100%',
+		alignSelf: 'center'
 	}
 });
