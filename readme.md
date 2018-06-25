@@ -12,12 +12,17 @@ The front end app and back end server are split into 2 directories - `/app` and 
 
 The React Native instance and Node instance will then need to be ran:
 
-* `react-native run-ios` (in /app)
-* `npm start server` (in /server)
+- `react-native run-ios` (in /app)
+- `npm start server` (in /server)
 
-Then create a MongoDB database and add the URL to a `.env` file in the `/server` directory.
+Then create a local MongoDB database on your machine - [follow this link](https://treehouse.github.io/installation-guides/mac/mongo-mac.html) for assistance if needed.
 
-The repo does not yet have a register section to get people in to the database, so you'll need to manually add people and use the credentials to log in. I'll try and get round to this soon, but in the meantime **I'm happy to receive pull requests** for a hand :)
+You'll then need to add a `.env` file in to the `/app` and `/server` directories:
+
+- In the `/server` directory, add in the MongoDB URI. For example: `MONGODB_URI_=mongodb://aaaaaaaaa:bbbbbbbbb@cccccccc.mlab.com:59187/aaaaaaa`.
+- In the `/app` directory, add in the API URI (the Node server URI). For example: `API_URL=http://localhost:1140`.
+
+> The repo does not yet have a register section to get people in to the database, so you'll need to manually add people and use the credentials to log in. I'll try and get round to this soon, but in the meantime **I'm happy to receive pull requests** for a hand :)
 
 ## Navigation using Wix React Native Navigation
 
@@ -47,8 +52,8 @@ Error handling on the server is handled in an isolate file to help with maintain
 
 ## Steps to take when unknown errors occur
 
-* Close packager terminal and re-build app using `react-native run-ios`.
-* Delete `/build` directory inside the `/ios` or `/android` directories, and re-run `react-native run-ios`.
-* Delete node_modules and re-run `npm install`.
-* Uninstall app from device or emulator and re-run.
-* Run `npm start -- --reset-cache` and re-run.
+- Close packager terminal and re-build app using `react-native run-ios`.
+- Delete `/build` directory inside the `/ios` or `/android` directories, and re-run `react-native run-ios`.
+- Delete node_modules and re-run `npm install`.
+- Uninstall app from device or emulator and re-run.
+- Run `npm start -- --reset-cache` and re-run.
