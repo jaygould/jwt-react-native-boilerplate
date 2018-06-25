@@ -10,17 +10,17 @@ This is a boilerplate/starter pack for a React Native app, and Node.js back end.
 
 The front end app and back end server are split into 2 directories - `/app` and `/server`. Firstly, go in to each folder and run `npm install` to pull down the dependencies.
 
-The React Native instance and Node instance will then need to be ran:
-
-- `react-native run-ios` (in /app)
-- `npm start server` (in /server)
-
 Then create a local MongoDB database on your machine - [follow this link](https://treehouse.github.io/installation-guides/mac/mongo-mac.html) for assistance if needed.
 
 You'll then need to add a `.env` file in to the `/app` and `/server` directories:
 
-- In the `/server` directory, add in the MongoDB URI. For example: `MONGODB_URI_=mongodb://aaaaaaaaa:bbbbbbbbb@cccccccc.mlab.com:59187/aaaaaaa`.
-- In the `/app` directory, add in the API URI (the Node server URI). For example: `API_URL=http://localhost:1140`.
+- In the `/server` directory, add in the MongoDB URI to your newly created `.env` file. For example: `MONGODB_URI_=mongodb://aaaaaaaaa:bbbbbbbbb@cccccccc.mlab.com:59187/aaaaaaa`.
+- In the `/app` directory, add in the API URI (the Node server URI) to your second newly created `.env` file. For example: `API_URL=http://localhost:1140`.
+
+You can then run the app and server instances separately:
+
+- `react-native run-ios` (in /app)
+- `npm start server` (in /server)
 
 > The repo does not yet have a register section to get people in to the database, so you'll need to manually add people and use the credentials to log in. I'll try and get round to this soon, but in the meantime **I'm happy to receive pull requests** for a hand :)
 
