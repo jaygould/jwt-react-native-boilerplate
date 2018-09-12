@@ -20,10 +20,19 @@ export const jwt = store => next => action => {
 					store.dispatch({ type: 'TOKEN_REFRESHED' });
 
 					//get the action before the last INVALID_TOKEN (the one which got denied because of token expiration)
-					//TODO - test when there are multiple INVALID_TOKEN instances in action buffer
 					let pos = buffer.map(e => e.type).indexOf('INVALID_TOKEN') - 1;
-					let previousRequest = buffer[pos];
-					if (typeof previousRequest === 'function') previousRequest();
+
+					// count back from the invalid token dispatch, and fire off the last dispatch again which was
+					// a function. These are to be dispatched, and have the dispatch function passed through to them.
+					for (var i = pos; i > -1; i -= 1) {
+						if (typeof buffer[i] === 'function') {
+							store.dispatch({
+								type: 'RESEND',
+								action: buffer[i](store.dispatch)
+							});
+							break;
+						}
+					}
 					buffer = [];
 				});
 			}
