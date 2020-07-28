@@ -1,6 +1,6 @@
-# React Native starter pack with JWT authentication
-
 ## :warning: This repo is no longer maintained
+
+# React Native starter pack with JWT authentication
 
 ![](screens.png)
 
