@@ -28,7 +28,7 @@
     "lodash": "4.17.4",
     "lusca": "1.5.1",
     "mongodb": "2.2.27",
-    "mongoose": "4.10.8",
+    "mongoose": "5.7.5",
     "morgan": "1.8.2",
     "path": "0.12.7",
     "request": "2.81.0",
