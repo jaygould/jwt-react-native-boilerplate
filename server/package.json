@@ -29,7 +29,7 @@
     "lusca": "1.5.1",
     "mongodb": "2.2.27",
     "mongoose": "4.10.8",
-    "morgan": "1.8.2",
+    "morgan": "1.9.1",
     "path": "0.12.7",
     "request": "2.81.0",
     "socket.io": "2.0.3"
