@@ -1,5 +1,7 @@
 # React Native starter pack with JWT authentication
 
+## :warning: This repo is no longer maintained
+
 ![](screens.png)
 
 This is a boilerplate/starter pack for a React Native app, and Node.js back end. The main focus for this repo is the usage of JSON Web Tokens for authentication, including using a custom system for handling access tokens and refresh tokens.
